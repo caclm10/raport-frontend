@@ -36,7 +36,7 @@ const parseValidationError = errors => {
 
 const ajax = async (url, method, data = {}, params = {}) => {
     try {
-        const resp = await axios({ method, url, data, params })
+        const resp = await instance({ method, url, data, params })
 
         return parseResp(resp)
     } catch (error) {
@@ -65,7 +65,7 @@ const ajax = async (url, method, data = {}, params = {}) => {
             })
         }
 
-        return errRes
+        throw errRes
     }
 }
 
