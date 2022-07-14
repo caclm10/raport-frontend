@@ -1,10 +1,12 @@
 import { useReducer } from 'react'
 import authContext from './auth-context.js'
 
+const userStorage = localStorage.getItem('user')
+
 const initialValues = {
-    user: null,
-    isLoggedIn: false,
-    token: ''
+    user: userStorage && JSON.parse(userStorage),
+    isLoggedIn: !!userStorage,
+    token: localStorage.getItem('token')
 }
 
 const reducer = (state, action) => {
@@ -32,6 +34,8 @@ const AuthProvider = ({ children }) => {
     const [auth, dispatch] = useReducer(reducer, initialValues)
 
     const login = (user, token) => {
+        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('token', token)
         dispatch({
             type: 'LOGIN',
             user, token
@@ -39,6 +43,8 @@ const AuthProvider = ({ children }) => {
     }
 
     const logout = () => {
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
         dispatch({ type: 'LOGOUT' })
     }
 

@@ -1,11 +1,12 @@
-import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useToggle } from 'react-use';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/use-auth'
 import { getValidationSchema, SCHEMAS, setErrorForm } from '../lib/form';
 import FormInput from '../components/FormInput';
 import ajax from '../lib/ajax';
-import { useToggle } from 'react-use';
 
 const LoginPage = () => {
     const { formState: { errors }, handleSubmit, register, setError, setFocus } = useForm({
@@ -15,6 +16,7 @@ const LoginPage = () => {
         },
         resolver: yupResolver(getValidationSchema(SCHEMAS.LOGIN)),
     })
+    const navigate = useNavigate()
     const auth = useAuth()
     const [isLoading, toggleLoading] = useToggle(false)
 
@@ -22,6 +24,14 @@ const LoginPage = () => {
         toggleLoading()
         try {
             const result = await ajax('/api/login', 'POST', data)
+            const { user, token } = result.data
+
+            console.log('before navigated')
+            auth.login(user, token)
+            console.log(user.peran)
+            console.log('navigated')
+            navigate(`/panel/${user.peran}/dashboard`, { replace: true })
+            console.log('after navigated')
         } catch (error) {
             if (error.code === 422) setErrorForm(setError, error.data, setFocus)
             toggleLoading()
@@ -46,7 +56,7 @@ const LoginPage = () => {
                     error={errors.password?.message}
                 />
 
-                <Button type="submit" colorScheme="purple" width="100%" isLoading={isLoading}>
+                <Button type="submit" colorScheme="purple" width="full" isLoading={isLoading}>
                     Login
                 </Button>
             </form>
