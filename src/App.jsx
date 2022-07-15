@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import FullLoading from './components/FullLoading'
 import NavigateToLogin from './components/NavigateToLogin'
 import AuthLayout from './layouts/AuthLayout'
@@ -6,9 +7,26 @@ import PanelLayout from './layouts/PanelLayout'
 import { ROLES } from './lib/auth'
 import LoginPage from './pages/LoginPage'
 import AdminPanelDashboardPage from './pages/panel/AdminPanelDashboardPage'
+import { useUiStore } from './stores/ui-store'
 
 
 function App() {
+  const location = useLocation()
+  const isFullLoading = useUiStore(state => state.isFullLoading)
+  const toggleFullLoading = useUiStore(state => state.toggleFullLoading)
+
+  useEffect(() => {
+    if (isFullLoading) {
+      const timeout = setTimeout(() => {
+        toggleFullLoading()
+      }, 100);
+
+      return () => {
+        clearTimeout(timeout)
+      }
+    }
+  }, [location.pathname])
+
   return (
     <>
       <FullLoading />

@@ -26,12 +26,8 @@ const LoginPage = () => {
             const result = await ajax('/api/login', 'POST', data)
             const { user, token } = result.data
 
-            console.log('before navigated')
             auth.login(user, token)
-            console.log(user.peran)
-            console.log('navigated')
             navigate(`/panel/${user.peran}/dashboard`, { replace: true })
-            console.log('after navigated')
         } catch (error) {
             if (error.code === 422) setErrorForm(setError, error.data, setFocus)
             toggleLoading()

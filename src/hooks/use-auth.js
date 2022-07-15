@@ -15,7 +15,6 @@ export const useLogout = () => {
     const logout = useCallback(async () => {
         toggleFullLoading('Logging out...')
         await ajax('/api/logout', 'POST')
-        toggleFullLoading()
         auth.logout()
         navigate('/auth/login')
     }, [])

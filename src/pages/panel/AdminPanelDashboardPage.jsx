@@ -1,20 +1,15 @@
-import { Button } from "@chakra-ui/react"
-import { useNavigate } from 'react-router-dom'
-import useAuth, { useLogout } from "../../hooks/use-auth"
-import ajax from "../../lib/ajax"
+import PanelActions from "../../components/PanelActions"
+import PanelCard from "../../components/PanelCard"
 
-const AdminPanelDashboardPage = ({
-
-}) => {
-    const logout = useLogout()
+const AdminPanelDashboardPage = () => {
     return (
-        <div>
-            AdminPanelDashboardPage
+        <>
+            <PanelCard>
+                <PanelActions>
 
-            <Button onClick={logout}>
-                Logout
-            </Button>
-        </div>
+                </PanelActions>
+            </PanelCard>
+        </>
     )
 }
 

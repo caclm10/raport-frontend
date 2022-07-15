@@ -5,3 +5,10 @@ export const authPageData = {
         title: "Login"
     }
 }
+
+
+export const panelPageData = {
+    "/panel/admin/dashboard": {
+        title: 'Dashboard'
+    }
+}
