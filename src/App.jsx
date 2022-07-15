@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
+import FullLoading from './components/FullLoading'
 import NavigateToLogin from './components/NavigateToLogin'
 import AuthLayout from './layouts/AuthLayout'
 import PanelLayout from './layouts/PanelLayout'
@@ -10,6 +11,7 @@ import AdminPanelDashboardPage from './pages/panel/AdminPanelDashboardPage'
 function App() {
   return (
     <>
+      <FullLoading />
       <Routes>
 
         <Route path="/">
