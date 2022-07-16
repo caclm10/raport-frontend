@@ -5,6 +5,7 @@ const PanelSidebarLink = ({
     to = '/',
     text = '',
     action = false,
+    icon = null,
     onClick = () => { }
 }) => {
     return (
@@ -32,6 +33,7 @@ const PanelSidebarLink = ({
             }}
             onClick={onClick}
         >
+            <span>{icon}</span>
             <span>{text}</span>
         </HStack>
     )

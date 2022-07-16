@@ -1,9 +1,11 @@
-import { Table, TableContainer, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react'
+import { Table, TableContainer, Thead, Tbody, Tr, Th, Td, Text, Box } from '@chakra-ui/react'
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 
 const PanelTable = ({
+    mb = 5,
     data = [],
-    columns = []
+    columns = [],
+    isLoading = false
 }) => {
     const table = useReactTable({
         data,
@@ -12,7 +14,7 @@ const PanelTable = ({
     })
 
     return (
-        <TableContainer>
+        <TableContainer position="relative" mb={mb}>
             <Table variant="simple">
                 <Thead>
                     {table.getHeaderGroups().map(headerGroup => (
@@ -30,7 +32,14 @@ const PanelTable = ({
                         </Tr>
                     ))}
                 </Thead>
-                <Tbody>
+                <Tbody >
+                    {data.length === 0 && isLoading &&
+                        <Tr>
+                            <Td colSpan="100%" textAlign="center">
+                                <Text color="gray.500">Loading...</Text>
+                            </Td>
+                        </Tr>
+                    }
                     {table.getRowModel().rows.map(row => (
                         <Tr key={row.id}>
                             {row.getVisibleCells().map(cell => (
@@ -42,6 +51,19 @@ const PanelTable = ({
                     ))}
                 </Tbody>
             </Table>
+
+            {data.length > 0 && isLoading &&
+                <Box
+                    position="absolute"
+                    inset={0}
+                    display="flex"
+                    bgColor="rgba(255,255,255,0.5)"
+                >
+                    <Box m="auto">
+                        <Text color="gray.500">Loading...</Text>
+                    </Box>
+                </Box>
+            }
         </TableContainer>
     )
 }

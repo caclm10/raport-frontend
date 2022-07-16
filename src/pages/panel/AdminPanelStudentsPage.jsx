@@ -1,23 +1,14 @@
 import { HStack, IconButton } from "@chakra-ui/react"
+import { useEffect } from "react"
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
+import { useToggle } from "react-use"
 import AddButton from "../../components/AddButton"
+import Pagination from "../../components/Pagination"
 import PanelActions from "../../components/PanelActions"
 import PanelCard from "../../components/PanelCard"
 import PanelTable from "../../components/PanelTable"
-
-const students = [
-    {
-        user: {
-            nama: 'Ghea Indrawari',
-            peran: 'siswa',
-            id: '1'
-        },
-        nis: '2423',
-        nisn: '4025345341',
-        id: '1',
-    }
-]
+import { useDataStore } from "../../stores/data-store"
 
 const columns = [
     {
@@ -57,6 +48,16 @@ const columns = [
 ]
 
 const AdminPanelStudentsPage = params => {
+    const students = useDataStore(state => state.students)
+    const studentsPaginator = useDataStore(state => state.studentsPaginator)
+    const fetchStudents = useDataStore(state => state.fetchStudents)
+    const shouldFetchStudents = useDataStore(state => state.shouldFetchStudents)
+    const isFetching = useDataStore(state => state.isFetching)
+
+    useEffect(() => {
+        if (shouldFetchStudents) fetchStudents()
+    }, [shouldFetchStudents])
+
     return (
         <>
             <PanelCard>
@@ -67,6 +68,12 @@ const AdminPanelStudentsPage = params => {
                 <PanelTable
                     data={students}
                     columns={columns}
+                    isLoading={isFetching}
+                />
+
+                <Pagination
+                    paginator={studentsPaginator}
+                    fetcher={fetchStudents}
                 />
             </PanelCard>
         </>
