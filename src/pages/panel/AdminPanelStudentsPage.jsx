@@ -62,7 +62,10 @@ const AdminPanelStudentsPage = params => {
         <>
             <PanelCard>
                 <PanelActions>
-                    <AddButton text="Siswa" />
+                    <AddButton
+                        text="Siswa"
+                        to="/panel/admin/siswa/create"
+                    />
                 </PanelActions>
 
                 <PanelTable

@@ -31,6 +31,9 @@ export const panelPageData = {
     "/panel/admin/siswa": {
         title: "Daftar Siswa"
     },
+    "/panel/admin/siswa/create": {
+        title: "Tambah Siswa"
+    },
     "default": {
         title: ''
     }
