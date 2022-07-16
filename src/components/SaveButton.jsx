@@ -9,6 +9,7 @@ const SaveButton = ({
     onClick = () => { },
     type = 'submit',
     form = '',
+    isLoading = false,
     ...rest
 }) => {
     return (
@@ -20,6 +21,7 @@ const SaveButton = ({
             onClick={onClick}
             type={type}
             form={form}
+            isLoading={isLoading}
             {...rest}
         >
             {text}

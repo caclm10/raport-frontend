@@ -7,12 +7,13 @@ const FormInput = forwardRef(({
     label = '',
     error = '',
     register = () => { },
+    autoFocus = false,
     ...rest
 }, ref) => {
     return (
         <FormControl mb={5} isInvalid={!!error}>
             <FormLabel htmlFor={name}>{label}</FormLabel>
-            <Input type={type} ref={ref} {...register(name)} {...rest} />
+            <Input type={type} ref={ref} {...register(name)} {...rest} autoFocus={autoFocus} />
             {error && <FormErrorMessage>{error}</FormErrorMessage>}
         </FormControl>
     )

@@ -42,6 +42,7 @@ const LoginPage = () => {
                     name="user_key"
                     register={register}
                     error={errors.user_key?.message}
+                    autoFocus
                 />
 
                 <FormInput

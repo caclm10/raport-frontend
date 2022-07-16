@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import FullLoading from './components/FullLoading'
 import NavigateToLogin from './components/NavigateToLogin'
@@ -32,6 +33,7 @@ function App() {
   return (
     <>
       <FullLoading />
+      <Toaster />
       <Routes>
 
         <Route path="/">
