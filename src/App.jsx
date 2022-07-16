@@ -7,6 +7,7 @@ import PanelLayout from './layouts/PanelLayout'
 import { ROLES } from './lib/auth'
 import LoginPage from './pages/LoginPage'
 import AdminPanelDashboardPage from './pages/panel/AdminPanelDashboardPage'
+import AdminPanelStudentsPage from './pages/panel/AdminPanelStudentsPage'
 import { useUiStore } from './stores/ui-store'
 
 
@@ -41,13 +42,23 @@ function App() {
             <Route path="login" element={<LoginPage />} />
           </Route>
 
+          {/* Panel Routes */}
           <Route path="panel" element={<PanelLayout />} >
-            <Route path={ROLES.ADMIN}>
-              <Route path="dashboard" element={<AdminPanelDashboardPage />} />
-            </Route>
 
+            {/* Admin Panel Routes */}
+            <Route path={ROLES.ADMIN}>
+
+              <Route path="dashboard" element={<AdminPanelDashboardPage />} />
+
+              <Route path="siswa">
+                <Route index element={<AdminPanelStudentsPage />} />
+              </Route>
+
+            </Route>
+            {/* End of Admin Panel Routes */}
 
           </Route>
+          {/* End of Panel Routes */}
 
         </Route>
 

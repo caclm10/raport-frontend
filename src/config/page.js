@@ -10,5 +10,11 @@ export const authPageData = {
 export const panelPageData = {
     "/panel/admin/dashboard": {
         title: 'Dashboard'
+    },
+    "/panel/admin/siswa": {
+        title: "Daftar Siswa"
+    },
+    "default": {
+        title: ''
     }
 }
