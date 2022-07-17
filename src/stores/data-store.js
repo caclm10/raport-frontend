@@ -1,22 +1,23 @@
 import toast from 'react-hot-toast'
 import create from 'zustand'
 import ajax from '../lib/ajax'
-import { getSortedIndex } from '../lib/arr'
 import { setErrorForm } from '../lib/form'
 
 const initialState = {
     students: [],
     studentsPaginator: null,
     shouldFetchStudents: true,
+    studentsFetchURL: '/api/siswa',
     isFetching: false,
     isSubmitting: false,
 }
 
 export const useDataStore = create((set, get) => ({
     ...initialState,
-    fetchStudents: async (url = '/api/siswa') => {
+    setStudentsFetchURL: (url = '') => set({ studentsFetchURL: url }),
+    fetchStudents: async () => {
         set({ isFetching: true })
-        const result = await ajax(url)
+        const result = await ajax(get().studentsFetchURL)
         const { data, ...paginator } = result.data
 
 

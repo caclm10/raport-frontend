@@ -50,13 +50,15 @@ const ajax = async (url, method, data = {}, params = {}) => {
             ok: false
         }
 
-        if (errResp) {
+        if (errResp.config) {
             errRes = parseResp(errResp)
 
             if (errRes.code === 422) errRes.data = parseValidationError(errRes.data.errors)
         }
-        else if (errReq) errRes.message = 'Request time out'
+        else if (errReq.config) errRes.message = 'Request time out'
         else errRes.message = 'Request error'
+
+        console.log(errRes.message)
 
         if (errRes.code !== 422) {
             toast.error(errRes.message, {
