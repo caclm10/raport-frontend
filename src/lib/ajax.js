@@ -58,12 +58,10 @@ const ajax = async (url, method, data = {}, params = {}) => {
         else if (errReq.config) errRes.message = 'Request time out'
         else errRes.message = 'Request error'
 
-        console.log(errRes.message)
-
         if (errRes.code !== 422) {
             toast.error(errRes.message, {
                 duration: 2000,
-                position: 'top-right',
+                position: 'bottom-center',
             })
         }
 

@@ -14,7 +14,7 @@ const initialState = {
 
 export const useDataStore = create((set, get) => ({
     ...initialState,
-    setStudentsFetchURL: (url = '') => set({ studentsFetchURL: url }),
+    setStudentsFetchURL: (url = '') => set({ studentsFetchURL: url, shouldFetchStudents: true }),
     fetchStudents: async () => {
         set({ isFetching: true })
         const result = await ajax(get().studentsFetchURL)
@@ -37,6 +37,21 @@ export const useDataStore = create((set, get) => ({
                 position: 'bottom-center'
             })
             reset()
+            setFocus('nis')
+        } catch (error) {
+            if (error.code === 422) setErrorForm(setError, error.data, setFocus)
+        }
+        set({ isSubmitting: false })
+    },
+
+    updateStudent: async (data, id, setError, setFocus) => {
+        set({ isSubmitting: true })
+        try {
+            await ajax(`/api/siswa/${id}`, 'PATCH', data)
+            toast.success('Berhasil memperbarui data siswa', {
+                duration: 3000,
+                position: 'bottom-center'
+            })
             setFocus('nis')
         } catch (error) {
             if (error.code === 422) setErrorForm(setError, error.data, setFocus)

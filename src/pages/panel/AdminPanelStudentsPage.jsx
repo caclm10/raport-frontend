@@ -2,7 +2,6 @@ import { HStack, IconButton } from "@chakra-ui/react"
 import { useEffect } from "react"
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
-import { useToggle } from "react-use"
 import AddButton from "../../components/AddButton"
 import Pagination from "../../components/Pagination"
 import PanelActions from "../../components/PanelActions"
@@ -52,12 +51,11 @@ const AdminPanelStudentsPage = params => {
     const studentsPaginator = useDataStore(state => state.studentsPaginator)
     const fetchStudents = useDataStore(state => state.fetchStudents)
     const shouldFetchStudents = useDataStore(state => state.shouldFetchStudents)
-    const studentsFetchURL = useDataStore(state => state.studentsFetchURL)
     const isFetching = useDataStore(state => state.isFetching)
 
     useEffect(() => {
-        if (shouldFetchStudents || studentsFetchURL) fetchStudents()
-    }, [shouldFetchStudents, studentsFetchURL])
+        if (shouldFetchStudents) fetchStudents()
+    }, [shouldFetchStudents])
 
     return (
         <>
