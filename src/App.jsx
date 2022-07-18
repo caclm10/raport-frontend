@@ -9,6 +9,7 @@ import { ROLES } from './lib/auth'
 import LoginPage from './pages/LoginPage'
 import AdminPanelCreateStudentPage from './pages/panel/AdminPanelCreateStudentPage'
 import AdminPanelDashboardPage from './pages/panel/AdminPanelDashboardPage'
+import AdminPanelEditStudentPage from './pages/panel/AdminPanelEditStudentPage'
 import AdminPanelStudentsPage from './pages/panel/AdminPanelStudentsPage'
 import { useUiStore } from './stores/ui-store'
 
@@ -56,6 +57,7 @@ function App() {
               <Route path="siswa">
                 <Route index element={<AdminPanelStudentsPage />} />
                 <Route path="create" element={<AdminPanelCreateStudentPage />} />
+                <Route path=":studentId/edit" element={<AdminPanelEditStudentPage />} />
               </Route>
 
             </Route>

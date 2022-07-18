@@ -51,6 +51,7 @@ const AdminPanelStudentsPage = params => {
     const studentsPaginator = useDataStore(state => state.studentsPaginator)
     const fetchStudents = useDataStore(state => state.fetchStudents)
     const shouldFetchStudents = useDataStore(state => state.shouldFetchStudents)
+    const setStudentsFetchURL = useDataStore(state => state.setStudentsFetchURL)
     const isFetching = useDataStore(state => state.isFetching)
 
     useEffect(() => {
@@ -75,6 +76,7 @@ const AdminPanelStudentsPage = params => {
 
                 <Pagination
                     paginator={studentsPaginator}
+                    onPageChange={setStudentsFetchURL}
                 />
             </PanelCard>
         </>

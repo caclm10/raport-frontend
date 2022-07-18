@@ -1,14 +1,12 @@
-import { Box, Button, HStack, IconButton } from "@chakra-ui/react"
+import { Button, HStack, IconButton } from "@chakra-ui/react"
 import { Fragment } from "react"
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi"
-import { useDataStore } from "../stores/data-store"
 
 const Pagination = ({
     justify = 'flex-end',
     paginator = null,
+    onPageChange = url => { }
 }) => {
-    const setStudentsFetchURL = useDataStore(state => state.setStudentsFetchURL)
-
     if (!paginator || paginator.links.length === 1) return <></>
 
     return (
@@ -22,7 +20,7 @@ const Pagination = ({
                             size="sm"
                             colorScheme={link.active ? 'purple' : 'gray'}
                             as={link.active ? 'span' : 'button'}
-                            onClick={link.active ? null : () => setStudentsFetchURL(link.url)}
+                            onClick={link.active ? null : () => onPageChange(link.url)}
 
                         >
                             {link.label}
@@ -33,7 +31,7 @@ const Pagination = ({
                             icon={<HiOutlineChevronLeft />}
                             size="sm"
                             as={link.url ? 'button' : 'span'}
-                            onClick={link.url ? () => setStudentsFetchURL(link.url) : null}
+                            onClick={link.url ? () => onPageChange(link.url) : null}
                         />
                     }
 
@@ -42,7 +40,7 @@ const Pagination = ({
                             icon={<HiOutlineChevronRight />}
                             size="sm"
                             as={link.url ? 'button' : 'span'}
-                            onClick={link.url ? () => setStudentsFetchURL(link.url) : null}
+                            onClick={link.url ? () => onPageChange(link.url) : null}
                         />
                     }
                 </Fragment>

@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import BackButton from "../../components/BackButton"
 import PanelActions from "../../components/PanelActions"
-import PanelCard from "../../components/PanelCard"
+import PanelCard, { panelCardVariables } from "../../components/PanelCard"
 import SaveButton from "../../components/SaveButton"
 import StudentForm from '../../components/student/StudentForm'
 import { useDataStore } from '../../stores/data-store'
@@ -13,7 +13,7 @@ const AdminPanelCreateStudentPage = () => {
 
     return (
         <>
-            <PanelCard>
+            <PanelCard maxW={panelCardVariables.maxW.form} mx="auto">
                 <PanelActions>
                     <BackButton to="/panel/admin/siswa" />
 

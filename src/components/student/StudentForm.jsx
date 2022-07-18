@@ -1,25 +1,24 @@
-import { useMemo } from "react"
+import { Box, Text } from "@chakra-ui/react"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
+import isEmpty from 'lodash.isempty'
 import { useDataStore } from "../../stores/data-store"
 import FormInput from "../FormInput"
 
 const StudentForm = ({
     type,
-    data = {
-        nis: '',
-        nisn: '',
-        user: { nama: '' }
-    },
-    formId = ''
+    data = {},
+    formId = '',
+    isLoading = false
 }) => {
     if (!type) return <></>
 
-    const { formState: { errors }, handleSubmit, register, reset, setError, setFocus } = useForm({
-        defaultValues: useMemo(() => ({
-            nis: data.nis,
-            nisn: data.nisn,
-            nama: data.user.nama
-        }), [data.nis, data.nisn, data.user.nama])
+    const { formState: { errors }, handleSubmit, register, reset, setError, setFocus, setValue } = useForm({
+        defaultValues: {
+            nis: '',
+            nisn: '',
+            nama: ''
+        }
     })
 
     const addStudent = useDataStore(state => state.addStudent)
@@ -33,8 +32,33 @@ const StudentForm = ({
         await fetchStudents()
     }
 
+    useEffect(() => {
+        if (!isEmpty(data)) {
+            for (const attr in data) {
+                if (Object.hasOwnProperty.call(data, attr)) {
+                    const value = data[attr];
+                    setValue(attr, value)
+                }
+            }
+        }
+    }, [data])
+
     return (
-        <form action="#" id={formId} onSubmit={handleSubmit(handleSave)}>
+        <Box as="form" action="#" id={formId} onSubmit={handleSubmit(handleSave)} position="relative">
+
+            {/* {isLoading &&
+                <Box
+                    position="absolute"
+                    inset={0}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    bgColor="#ffffff87"
+                    zIndex={100}
+                >
+                    <Text>Loading...</Text>
+                </Box>
+            } */}
 
             <FormInput
                 name="nis"
@@ -56,7 +80,7 @@ const StudentForm = ({
                 error={errors.nama?.message}
             />
 
-        </form>
+        </Box>
     )
 }
 
