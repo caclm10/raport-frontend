@@ -1,12 +1,17 @@
 import { HStack, IconButton } from "@chakra-ui/react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+// import toast from "react-hot-toast"
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
+import { useToggle } from 'react-use'
 import AddButton from "../../components/AddButton"
+import DeleteConfirm from "../../components/DeleteConfirm"
 import Pagination from "../../components/Pagination"
 import PanelActions from "../../components/PanelActions"
 import PanelCard from "../../components/PanelCard"
 import PanelTable from "../../components/PanelTable"
+import ajax from "../../lib/ajax"
+import { toast } from "../../lib/toast"
 import { useDataStore } from "../../stores/data-store"
 
 const columns = [
@@ -22,7 +27,7 @@ const columns = [
     },
     {
         id: 'aksi',
-        cell: ({ row }) => (
+        cell: ({ row, table, }) => (
             <HStack spacing={3} justify="flex-end">
                 <IconButton
                     as={Link}
@@ -39,6 +44,7 @@ const columns = [
                     rounded="full"
                     colorScheme="red"
                     variant="ghost"
+                    onClick={() => table.options.meta?.handleDelete(row.original.id)}
                 />
             </HStack>
         ),
@@ -53,6 +59,24 @@ const AdminPanelStudentsPage = params => {
     const shouldFetchStudents = useDataStore(state => state.shouldFetchStudents)
     const setStudentsFetchURL = useDataStore(state => state.setStudentsFetchURL)
     const isFetching = useDataStore(state => state.isFetching)
+    const [isDeleteConfirmationOpen, toggleDeleteConfirmation] = useToggle(false)
+    const [isDeletting, toggleDeleting] = useToggle()
+    const [studentId, setStudentId] = useState()
+
+    const showDeleteConfirmationHandler = id => {
+        toggleDeleteConfirmation(true)
+        setStudentId(id)
+    }
+
+    const deleteStudentHandler = async () => {
+        toggleDeleting(true)
+        await ajax(`/api/siswa/${studentId}`, 'DELETE')
+        toggleDeleting(false)
+        setStudentId(null)
+        toggleDeleteConfirmation(false)
+        toast.success({ title: 'Berhasil menghapus siswa.' })
+        fetchStudents()
+    }
 
     useEffect(() => {
         if (shouldFetchStudents) fetchStudents()
@@ -60,6 +84,12 @@ const AdminPanelStudentsPage = params => {
 
     return (
         <>
+            <DeleteConfirm
+                onClose={() => toggleDeleteConfirmation(false)}
+                isOpen={isDeleteConfirmationOpen}
+                onConfirm={deleteStudentHandler}
+                isLoading={isDeletting}
+            />
             <PanelCard>
                 <PanelActions>
                     <AddButton
@@ -72,6 +102,7 @@ const AdminPanelStudentsPage = params => {
                     data={students}
                     columns={columns}
                     isLoading={isFetching}
+                    onClickDelete={showDeleteConfirmationHandler}
                 />
 
                 <Pagination

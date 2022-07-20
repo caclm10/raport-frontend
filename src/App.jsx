@@ -1,3 +1,4 @@
+import { createStandaloneToast } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { Routes, Route, useLocation } from 'react-router-dom'
@@ -13,6 +14,7 @@ import AdminPanelEditStudentPage from './pages/panel/AdminPanelEditStudentPage'
 import AdminPanelStudentsPage from './pages/panel/AdminPanelStudentsPage'
 import { useUiStore } from './stores/ui-store'
 
+const { ToastContainer } = createStandaloneToast()
 
 function App() {
   const location = useLocation()
@@ -35,6 +37,7 @@ function App() {
     <>
       <FullLoading />
       <Toaster />
+      <ToastContainer />
       <Routes>
 
         <Route path="/">

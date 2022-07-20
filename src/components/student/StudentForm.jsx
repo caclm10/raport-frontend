@@ -66,18 +66,21 @@ const StudentForm = ({
                 register={register}
                 error={errors.nis?.message}
                 autoFocus
+                readOnly={isLoading}
             />
             <FormInput
                 name="nisn"
                 label="NISN"
                 register={register}
                 error={errors.nisn?.message}
+                readOnly={isLoading}
             />
             <FormInput
                 name="nama"
                 label="Nama"
                 register={register}
                 error={errors.nama?.message}
+                readOnly={isLoading}
             />
 
         </Box>

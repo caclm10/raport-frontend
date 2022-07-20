@@ -1,7 +1,8 @@
-import toast from 'react-hot-toast'
+// import toast from 'react-hot-toast'
 import create from 'zustand'
 import ajax from '../lib/ajax'
 import { setErrorForm } from '../lib/form'
+import { toast } from '../lib/toast'
 
 const initialState = {
     students: [],
@@ -32,12 +33,9 @@ export const useDataStore = create((set, get) => ({
         set({ isSubmitting: true })
         try {
             await ajax('/api/siswa', 'POST', data)
-            toast.success('Berhasil menambah siswa', {
-                duration: 3000,
-                position: 'bottom-center'
-            })
-            reset()
+            toast.success({ title: 'Berhasil menambah siswa.' })
             setFocus('nis')
+            reset()
         } catch (error) {
             if (error.code === 422) setErrorForm(setError, error.data, setFocus)
         }
@@ -48,10 +46,7 @@ export const useDataStore = create((set, get) => ({
         set({ isSubmitting: true })
         try {
             await ajax(`/api/siswa/${id}`, 'PATCH', data)
-            toast.success('Berhasil memperbarui data siswa', {
-                duration: 3000,
-                position: 'bottom-center'
-            })
+            toast.success({ title: 'Berhasil memperbarui data siswa.' })
             setFocus('nis')
         } catch (error) {
             if (error.code === 422) setErrorForm(setError, error.data, setFocus)

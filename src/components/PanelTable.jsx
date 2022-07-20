@@ -5,12 +5,16 @@ const PanelTable = ({
     mb = 5,
     data = [],
     columns = [],
-    isLoading = false
+    isLoading = false,
+    onClickDelete = () => { }
 }) => {
     const table = useReactTable({
         data,
         columns,
-        getCoreRowModel: getCoreRowModel()
+        getCoreRowModel: getCoreRowModel(),
+        meta: {
+            handleDelete: onClickDelete
+        }
     })
 
     return (
