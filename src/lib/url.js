@@ -1,3 +1,7 @@
+export const getUrlWithoutParams = url => {
+    return url.split('?')[0]
+}
+
 export const generateSearchParam = (keyword, url) => {
     const queryParams = url.split('?')[1]
 

@@ -3,6 +3,7 @@ import create from 'zustand'
 import ajax from '../lib/ajax'
 import { setErrorForm } from '../lib/form'
 import { toast } from '../lib/toast'
+import { generateSearchParam } from '../lib/url'
 
 const initialState = {
     students: [],
@@ -10,12 +11,20 @@ const initialState = {
     shouldFetchStudents: true,
     studentsFetchURL: '/api/siswa',
     isFetching: false,
+    studentsSearch: '',
     isSubmitting: false,
 }
 
 export const useDataStore = create((set, get) => ({
     ...initialState,
     setStudentsFetchURL: (url = '') => set({ studentsFetchURL: url, shouldFetchStudents: true }),
+    setStudentsSearch: (keyword = '') => {
+        const currentURL = get().studentsFetchURL
+
+        const newURL = currentURL.split('?')[0] + "?" + generateSearchParam(keyword, currentURL)
+
+        set({ studentsFetchURL: newURL, studentsSearch: keyword, shouldFetchStudents: true })
+    },
     fetchStudents: async () => {
         set({ isFetching: true })
         const result = await ajax(get().studentsFetchURL)

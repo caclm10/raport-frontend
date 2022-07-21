@@ -9,10 +9,11 @@ const PanelTable = ({
     data = [],
     columns = [],
     isLoading = false,
-    url = '',
     paginator = null,
+    search = '',
     onClickDelete = () => { },
-    onUrlChange = url => { }
+    onUrlChange = url => { },
+    onSearch = keyword => { }
 }) => {
     const table = useReactTable({
         data,
@@ -23,16 +24,9 @@ const PanelTable = ({
         }
     })
 
-    const handleSearch = keyword => {
-        if (!url) return
-        const newUrl = url + '?' + generateSearchParam(keyword, url)
-
-        onUrlChange(newUrl)
-    }
-
     return (
         <>
-            <PanelTableSearch onSearch={handleSearch} />
+            <PanelTableSearch search={search} onSearch={onSearch} />
 
             <TableContainer position="relative" mb={mb}>
                 <Table variant="simple">
