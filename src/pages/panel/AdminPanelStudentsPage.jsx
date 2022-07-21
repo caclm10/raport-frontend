@@ -57,6 +57,7 @@ const AdminPanelStudentsPage = params => {
     const studentsPaginator = useDataStore(state => state.studentsPaginator)
     const fetchStudents = useDataStore(state => state.fetchStudents)
     const shouldFetchStudents = useDataStore(state => state.shouldFetchStudents)
+    const studentsFetchURL = useDataStore(state => state.studentsFetchURL)
     const setStudentsFetchURL = useDataStore(state => state.setStudentsFetchURL)
     const isFetching = useDataStore(state => state.isFetching)
     const [isDeleteConfirmationOpen, toggleDeleteConfirmation] = useToggle(false)
@@ -103,12 +104,11 @@ const AdminPanelStudentsPage = params => {
                     columns={columns}
                     isLoading={isFetching}
                     onClickDelete={showDeleteConfirmationHandler}
+                    paginator={studentsPaginator}
+                    onUrlChange={setStudentsFetchURL}
+                    url={studentsFetchURL}
                 />
 
-                <Pagination
-                    paginator={studentsPaginator}
-                    onPageChange={setStudentsFetchURL}
-                />
             </PanelCard>
         </>
     )

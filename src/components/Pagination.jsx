@@ -7,7 +7,7 @@ const Pagination = ({
     paginator = null,
     onPageChange = url => { }
 }) => {
-    if (!paginator || paginator.links.length === 1) return <></>
+    if (!paginator || paginator.links.length < 4) return <></>
 
     return (
         <HStack justify={justify}>

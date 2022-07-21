@@ -1,5 +1,5 @@
 import axios from "axios"
-import toast from "react-hot-toast"
+import { toast } from "./toast"
 
 const instance = axios.create()
 instance.defaults.baseURL = 'http://localhost:8000'
@@ -55,14 +55,11 @@ const ajax = async (url, method, data = {}, params = {}) => {
 
             if (errRes.code === 422) errRes.data = parseValidationError(errRes.data.errors)
         }
-        else if (errReq.config) errRes.message = 'Request time out'
-        else errRes.message = 'Request error'
+        else if (errReq.config) errRes.message = 'Request time out.'
+        else errRes.message = 'Request error.'
 
         if (errRes.code !== 422) {
-            toast.error(errRes.message, {
-                duration: 2000,
-                position: 'bottom-center',
-            })
+            toast.error({ title: errRes.message })
         }
 
         throw errRes
